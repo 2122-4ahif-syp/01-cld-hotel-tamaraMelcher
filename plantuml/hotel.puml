@@ -1,0 +1,62 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+class Room{
+    -int number
+    Category:category
+}
+
+class Category{
+    -int id
+    -string category
+}
+
+class Employee{
+    -int svnr
+    -string name
+    -string address
+}
+
+class RoomCleaner{
+    -string description
+    Room:room
+}
+
+class Supervisor{
+    -string description
+    -string subject
+}
+
+class Guest{
+    -int guestnr
+    -string name
+    -string address
+}
+
+class Booking{
+    Room:room
+    Guest:guest
+    LocalDate arrivalDate
+    LocalDate departureDate
+}
+
+class ServicePackage{
+    -string description
+    -double price
+    -int numberOf
+}
+
+class ServicePackageSupervisor{
+    ServicePackage:servicePackage
+    Supervisor:supervisor
+}
+
+Room "*" -> "1" Category
+Guest "*"--"*" Room
+(Guest,Room)..Booking
+Employee "1"-->"*" Supervisor
+Employee "1"-->"*" RoomCleaner
+Room "1"<--"*" RoomCleaner
+ServicePackage "*"--"1..*" Supervisor
+(ServicePackage,Supervisor)--ServicePackageSupervisor
+@enduml
